@@ -8,9 +8,3 @@ services:
     envVars:
       - key: VITE_API_URL
         value: "https://mtachasit.onrender.com"
-    
-    # SPA routing configuration
-    routes:
-      - type: rewrite
-        source: "/*"
-        destination: "/index.html"
