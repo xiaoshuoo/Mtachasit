@@ -1,0 +1,15 @@
+/* Все анимации и keyframes fade-in, scale-in, slide-up, expand/collapse удалены */
+
+.expand-fade-enter-active, .expand-fade-leave-active {
+  transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
+}
+.expand-fade-enter-from, .expand-fade-leave-to {
+  max-height: 0;
+  opacity: 0;
+}
+.expand-fade-enter-to, .expand-fade-leave-from {
+  max-height: 800px;
+  opacity: 1;
+}
+

@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Импорт лекций из папки{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-6">
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl glass-card flex items-center justify-center">
+        <i class="fas fa-folder-open text-purple-300"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold">Импорт лекций из папки</h1>
+        <p class="text-gray-400">Массовый импорт .txt файлов из указанной директории</p>
+      </div>
+    </div>
+    <a href="{% url 'blog:lectures' %}" class="px-3 py-2 rounded-lg glass-card text-gray-300 hover:bg-white/10"><i class="fas fa-arrow-left mr-2"></i>Назад</a>
+  </div>
+
+  <div class="glass-card rounded-2xl p-6">
+    <form method="post" class="space-y-6">{% csrf_token %}
+      <div>
+        <label class="block mb-2 text-gray-300">Путь к папке с лекциями</label>
+        <input type="text" name="directory_path" placeholder="/path/to/lectures/folder" required class="w-full px-4 py-3 rounded-xl glass-card outline-none" />
+        <p class="mt-2 text-sm text-gray-400">Каждый .txt файл будет импортирован как отдельная лекция. Существующие названия будут пропущены.</p>
+      </div>
+      <div class="flex justify-end gap-3">
+        <a href="{% url 'blog:lectures' %}" class="px-4 py-2 rounded-xl glass-card text-gray-300 hover:bg-white/10">Отмена</a>
+        <button type="submit" class="px-4 py-2 rounded-xl glass-card text-purple-200 hover:bg-purple-500/10"><i class="fas fa-download mr-2"></i>Импортировать все файлы</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+

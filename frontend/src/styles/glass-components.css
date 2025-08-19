@@ -1,0 +1,211 @@
+.glass-element {
+  background: var(--glass-primary);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-element::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+.glass-element:hover {
+  background: rgba(26, 22, 37, 0.5);
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+.template-card {
+}
+
+.template-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(236,72,153,0.12), rgba(59,130,246,0.12));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.template-card:hover {
+  background: var(--glass-primary);
+}
+
+.template-card:hover::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: transparent;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+/* Удалены все transition, animation, transform, scale, translate, rotate, keyframes, связанные с анимацией подъема, приближения, увеличения, вращения, появления карточек и элементов */
+
+.neon-button {
+  position: relative;
+  padding: 12px 24px;
+  background: transparent;
+  border: 2px solid var(--neon-purple);
+  border-radius: 12px;
+  color: var(--neon-purple);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(139,92,246,0.3), inset 0 0 10px rgba(139,92,246,0.1);
+}
+
+.neon-button--sm { padding: 8px 14px; font-size: 14px; border-width: 1.5px; }
+.animated-icon--sm { width: 36px; height: 36px; }
+.animated-icon--xs { width: 24px; height: 24px; }
+
+/* Pretty dropdown styling for categories */
+.dropdown-heading { font-size: 12px; color: #cbd5e1; text-transform: uppercase; letter-spacing: .08em; padding: 6px 8px; }
+.dropdown-item { display:flex; align-items:center; padding: 8px 10px; border-radius: 8px; color:#e5e7eb; cursor:pointer; }
+.dropdown-item:hover { background: rgba(255,255,255,0.06); }
+.dropdown-divider { height:1px; margin:6px 0; background: var(--glass-border); }
+
+.neon-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -100%;
+  width: 100%;
+  height: calc(100% + 4px);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.neon-button:hover {
+  color: white;
+  background: rgba(255,255,255,0.06);
+  box-shadow: var(--shadow-hover);
+}
+
+.neon-button:hover::before { left: 100%; }
+.neon-button:active { transform: translateY(0); }
+
+/* Glass icon button enhancement */
+.btn-glass {
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: all 0.2s ease;
+}
+.btn-glass:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-hover);
+}
+.btn-glass:active { transform: translateY(0); }
+
+.animated-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(236,72,153,0.2));
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  position: relative; overflow: hidden; cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animated-icon::after {
+  content: '';
+  position: absolute; inset: -2px; border-radius: inherit;
+  background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(236,72,153,0.6));
+  z-index: -1; opacity: 0; /* убран пульс-свечения */
+}
+
+.animated-icon .icon { color: #A78BFA; font-size: 20px; transition: all 0.3s ease; }
+.animated-icon:hover { box-shadow: var(--shadow-hover), 0 0 0 1px rgba(255,255,255,0.1); }
+.animated-icon:hover .icon { color: #E9D5FF; transform: rotate(15deg); }
+.animated-icon:hover::after { opacity: 0.25; }
+
+@keyframes aiPulse {
+  0%, 100% { opacity: 0; transform: none; }
+  50% { opacity: 0.3; transform: none; }
+}
+
+.copyable-line {
+  padding: 12px 16px; border-radius: 8px; border: 1px solid transparent;
+  background: rgba(255,255,255,0.02); cursor: pointer; position: relative;
+  transition: all 0.3s ease;
+}
+.copyable-line .line-number {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 6px;
+  background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border);
+  color: #cbd5e1; font-size: 12px; font-family: 'JetBrains Mono', monospace; margin-right: 12px;
+}
+.copyable-line:hover { background: rgba(255,255,255,0.06); border-color: var(--glass-border); box-shadow: var(--shadow-hover); }
+.copyable-line:hover::after {
+  content: 'Нажмите для копирования'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: var(--glass-primary); color: var(--text-secondary); padding: 4px 8px; border-radius: 6px; font-size: 12px;
+  backdrop-filter: blur(8px); border: 1px solid var(--glass-border);
+}
+.copyable-line.copied { background: rgba(16,185,129,0.1) !important; border-color: rgba(16,185,129,0.3) !important; animation: copySuccess 0.5s ease; }
+.copyable-line.copied::after { content: '✓ Скопировано!'; background: rgba(16,185,129,0.2); color: var(--neon-green); border-color: rgba(16,185,129,0.3); }
+
+@keyframes copySuccess { 0%{transform:scale(1)} 50%{transform:scale(1.02); box-shadow:0 0 20px rgba(16,185,129,0.3)} 100%{transform:scale(1)} }
+
+/* Search input */
+.search-input { position: relative; width: 100%; max-width: 400px; }
+.search-input .input {
+  width: 100%; padding: 14px 48px 14px 16px; background: var(--glass-primary);
+  border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-primary);
+  font-size: 16px; backdrop-filter: blur(8px); transition: all 0.3s ease;
+}
+.search-input .input::placeholder { color: var(--text-muted); }
+.search-input .input:focus { outline: none; background: rgba(26,22,37,0.6); border-color: var(--neon-purple); box-shadow: 0 0 0 3px rgba(91,33,182,0.12), 0 8px 25px rgba(0,0,0,0.15); }
+.search-input .search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px; pointer-events: none; transition: all 0.3s ease; }
+.search-input:focus-within .search-icon { color: var(--neon-purple); transform: translateY(-50%); }
+
+/* Notifications */
+.notification {
+  position: fixed; bottom: 24px; right: 24px; padding: 16px 20px; background: var(--glass-primary);
+  backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-primary);
+  font-weight: 500; box-shadow: var(--shadow-glass); z-index: 1000; transform: translateX(400px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.notification.show { transform: translateX(0); }
+.notification.success { border-left: 4px solid var(--neon-green); background: rgba(16,185,129,0.1); }
+.notification.error { border-left: 4px solid var(--neon-red); background: rgba(239,68,68,0.1); }
+.notification.warning { border-left: 4px solid var(--neon-orange); background: rgba(245,158,11,0.1); }
+
+@media (max-width: 768px) {
+  .glass-element { backdrop-filter: blur(8px); border-radius: 12px; margin: 0 8px; }
+  .template-card:hover { }
+  .neon-button { padding: 10px 20px; font-size: 14px; }
+  .animated-icon { width: 40px; height: 40px; }
+  .animated-icon .icon { font-size: 18px; }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .glass-element { margin: 0 12px; }
+  .template-card:hover { }
+}
+
+@media (min-width: 1025px) {
+  .cosmic-background::after { width: 1200px; height: 1200px; }
+  .glass-element:hover { }
+}
+
