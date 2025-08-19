@@ -9,8 +9,6 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
-      - key: PYTHONPATH
-        value: "/opt/render/project/src"
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
