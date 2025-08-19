@@ -24,7 +24,7 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-t_wfo7011n#emx3)*wd54s@3@n(8mnuhr==%^h330gi0uj+uz0')
+SECRET_KEY = os.environ.get('SECRET_KEY') or 'django-insecure-t_wfo7011n#emx3)*wd54s@3@n(8mnuhr==%^h330gi0uj+uz0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
@@ -196,6 +196,10 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Production settings
 if not DEBUG:
+    # Проверяем SECRET_KEY
+    if not SECRET_KEY or SECRET_KEY == 'django-insecure-t_wfo7011n#emx3)*wd54s@3@n(8mnuhr==%^h330gi0uj+uz0':
+        raise ValueError('SECRET_KEY must be set in production!')
+    
     # Security (упрощенные настройки для Render)
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
