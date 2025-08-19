@@ -24,12 +24,12 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t_wfo7011n#emx3)*wd54s@3@n(8mnuhr==%^h330gi0uj+uz0'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-t_wfo7011n#emx3)*wd54s@3@n(8mnuhr==%^h330gi0uj+uz0')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,mtachasit.onrender.com,.onrender.com').split(',')
 
 
 # Application definition
@@ -209,6 +209,7 @@ if not DEBUG:
     
     # CORS for production
     CORS_ALLOWED_ORIGINS = [
+        "https://mtachasit.onrender.com",
         "https://your-frontend-domain.onrender.com",
         "https://your-frontend-domain.vercel.app",
     ]
