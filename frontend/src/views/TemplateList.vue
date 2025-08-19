@@ -167,6 +167,10 @@ const orderedGroupSlugs = computed(() => {
 async function fetchTemplates() {
   loading.value = true
   try {
+    console.log('🔍 Fetching templates...')
+    console.log('📡 API Base URL:', import.meta.env.VITE_API_URL || 'https://mtachasit.onrender.com/api/')
+    console.log('🎯 Page type:', pageType.value)
+    
     const apiSet = pageType.value === 'rossi' ? rossiTemplateApi : templateApi
     const params: any = {}
     if (pageType.value === 'gutierrez-public') {
@@ -174,10 +178,17 @@ async function fetchTemplates() {
     } else if (pageType.value === 'all') {
       params.created_by_id = 1
     }
+    
+    console.log('📋 API params:', params)
+    
     const [tplAll, catRes] = await Promise.all([
       fetchAllTemplates(apiSet),
       apiSet.getCategories(params)
     ])
+    
+    console.log('✅ Templates fetched:', tplAll.length)
+    console.log('✅ Categories fetched:', catRes.data?.length || 0)
+    
     templates.value = tplAll.map((t: any) => ({
       ...t,
       titleLower: (t.title || '').toLowerCase(),
@@ -189,6 +200,9 @@ async function fetchTemplates() {
       slug: toSlug(c.category || ''),
       count: c.count ?? 0,
     }))
+  } catch (error) {
+    console.error('❌ Error fetching templates:', error)
+    console.error('❌ Error details:', error.response?.data || error.message)
   } finally {
     loading.value = false
   }

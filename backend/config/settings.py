@@ -228,7 +228,29 @@ if not DEBUG:
     CORS_ALLOWED_ORIGINS = [
         "https://mtachasit.onrender.com",
         "https://mtachasit.vercel.app",
-        "https://your-frontend-domain.vercel.app",
+        "http://localhost:5173",  # для локальной разработки
+    ]
+    
+    # Разрешаем все методы и заголовки для frontend
+    CORS_ALLOW_METHODS = [
+        'DELETE',
+        'GET',
+        'OPTIONS',
+        'PATCH',
+        'POST',
+        'PUT',
+    ]
+    
+    CORS_ALLOW_HEADERS = [
+        'accept',
+        'accept-encoding',
+        'authorization',
+        'content-type',
+        'dnt',
+        'origin',
+        'user-agent',
+        'x-csrftoken',
+        'x-requested-with',
     ]
     
     # Logging для отладки
