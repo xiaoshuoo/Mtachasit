@@ -29,7 +29,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY') or 'django-insecure-t_wfo7011n#emx3)*w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,mtachasit.onrender.com,.onrender.com').split(',')
+# Обрабатываем ALLOWED_HOSTS правильно
+ALLOWED_HOSTS_STR = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,mtachasit.onrender.com,.onrender.com')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_STR.split(',') if host.strip()]
 
 
 # Application definition
@@ -199,6 +201,10 @@ if not DEBUG:
     # Проверяем SECRET_KEY
     if not SECRET_KEY or SECRET_KEY == 'django-insecure-t_wfo7011n#emx3)*wd54s@3@n(8mnuhr==%^h330gi0uj+uz0':
         raise ValueError('SECRET_KEY must be set in production!')
+    
+    # Логируем ALLOWED_HOSTS для отладки
+    print(f"DEBUG: ALLOWED_HOSTS = {ALLOWED_HOSTS}")
+    print(f"DEBUG: DEBUG = {DEBUG}")
     
     # Security (упрощенные настройки для Render)
     SECURE_BROWSER_XSS_FILTER = True
