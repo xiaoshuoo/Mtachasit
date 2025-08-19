@@ -13,10 +13,12 @@ import Lectures from './views/Lectures.vue'
 import Login from './views/Login.vue'
 import HomePage from './views/HomePage.vue'
 import NotFound from './views/NotFound.vue'
+import { useNotifications } from './composables/useNotifications'
 
 const routes = [
   { path: '/', name: 'home', component: HomePage },
   { path: '/Xuachoo', name: 'my-templates', component: TemplateList, props: { filter: 'all' } },
+  { path: '/templates/Xuachoo', name: 'my-templates-alt', component: TemplateList, props: { filter: 'all' } },
   { path: '/templates/rossi', name: 'templates-rossi', component: TemplateList, props: { filter: 'rossi' } },
   { path: '/templates/gutierrez', name: 'templates-gutierrez-public', component: TemplateList, props: { filter: 'gutierrez-public' } },
   { path: '/new/gutierrez', name: 'new-gutierrez', component: EditTemplate, props: { templateType: 'gutierrez' } },
@@ -36,6 +38,10 @@ const router = createRouter({
 // Добавляем обработчик ошибок для отладки
 router.onError((error) => {
   console.error('🚨 Router error:', error)
+  
+  // Показываем уведомление об ошибке роутера
+  const { error: showError } = useNotifications()
+  showError('Ошибка навигации. Попробуйте обновить страницу.')
 })
 
 // Добавляем логирование навигации
@@ -44,6 +50,8 @@ router.beforeEach((to, from, next) => {
   console.log('  📍 From:', from.path, from.name)
   console.log('  🎯 To:', to.path, to.name)
   console.log('  🔍 To params:', to.params)
+  console.log('  🔍 To query:', to.query)
+  console.log('  🔍 To hash:', to.hash)
   next()
 })
 
@@ -51,6 +59,7 @@ router.afterEach((to, from) => {
   console.log('✅ Navigation completed:')
   console.log('  📍 Current path:', to.path)
   console.log('  📍 Current name:', to.name)
+  console.log('  📍 Current URL:', window.location.href)
 })
 
 createApp(App)
