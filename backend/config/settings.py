@@ -196,21 +196,28 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Production settings
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    
     # Security
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = 'DENY'
     
+    # SSL settings (отключаем для Render)
+    # SECURE_SSL_REDIRECT = False  # Render уже использует HTTPS
+    # SECURE_HSTS_SECONDS = 31536000
+    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    # SECURE_HSTS_PRELOAD = True
+    # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    
+    # Session and CSRF settings for production
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_HTTPONLY = True
+    
     # CORS for production
     CORS_ALLOWED_ORIGINS = [
         "https://mtachasit.onrender.com",
-        "https://your-frontend-domain.onrender.com",
+        "https://mtachasit.vercel.app",
         "https://your-frontend-domain.vercel.app",
     ]
 else:
