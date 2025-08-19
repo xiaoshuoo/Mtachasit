@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-router.afterEach((to, from) => {
+router.afterEach((to) => {
   console.log('✅ Navigation completed:')
   console.log('  📍 Current path:', to.path)
   console.log('  📍 Current name:', to.name)
