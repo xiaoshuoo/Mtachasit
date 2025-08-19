@@ -196,7 +196,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Production settings
 if not DEBUG:
-    # Security
+    # Security (упрощенные настройки для Render)
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = 'DENY'
@@ -208,9 +208,9 @@ if not DEBUG:
     # SECURE_HSTS_PRELOAD = True
     # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
-    # Session and CSRF settings for production
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+    # Session and CSRF settings (упрощенные)
+    SESSION_COOKIE_SECURE = False  # Отключаем для Render
+    CSRF_COOKIE_SECURE = False     # Отключаем для Render
     SESSION_COOKIE_HTTPONLY = True
     CSRF_COOKIE_HTTPONLY = True
     
@@ -220,6 +220,28 @@ if not DEBUG:
         "https://mtachasit.vercel.app",
         "https://your-frontend-domain.vercel.app",
     ]
+    
+    # Logging для отладки
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'console': {
+                'class': 'logging.StreamHandler',
+            },
+        },
+        'root': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['console'],
+                'level': 'INFO',
+                'propagate': False,
+            },
+        },
+    }
 else:
     # Development CORS
     CORS_ALLOW_ALL_ORIGINS = True

@@ -14,7 +14,7 @@ services:
       - key: DEBUG
         value: false
       - key: ALLOWED_HOSTS
-        value: ".onrender.com"
+        value: "mtachasit.onrender.com,.onrender.com"
       - key: DB_ENGINE
         value: "django.db.backends.postgresql"
       - key: DB_NAME
