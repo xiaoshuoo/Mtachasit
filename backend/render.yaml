@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: django-backend
+    env: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DB_ENGINE
+        value: "django.db.backends.postgresql"
+      - key: DB_NAME
+        fromDatabase:
+          name: postgres-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: postgres-db
+          property: username
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: postgres-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: postgres-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: postgres-db
+          property: port
+
+databases:
+  - name: postgres-db
+    databaseName: djangodb
+    user: djangouser
+    plan: free
