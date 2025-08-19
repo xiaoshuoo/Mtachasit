@@ -3,8 +3,14 @@ services:
     name: vue-frontend
     env: static
     plan: free
-    buildCommand: "npm install && npm run build"
-    staticPublishPath: ./dist
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: ./frontend/dist
     envVars:
       - key: VITE_API_URL
-        value: "https://your-django-backend.onrender.com"
+        value: "https://mtachasit.onrender.com"
+    
+    # SPA routing configuration
+    routes:
+      - type: rewrite
+        source: "/*"
+        destination: "/index.html"
