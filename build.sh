@@ -2,10 +2,16 @@
 # exit on error
 set -o errexit
 
+cd backend
+
 # Install dependencies
-pip install -r backend/requirements.txt
+pip install -r requirements.txt
+
+# Create staticfiles directory if it doesn't exist
+mkdir -p staticfiles
 
 # Collect static files
-cd backend
 python manage.py collectstatic --no-input
+
+# Run migrations
 python manage.py migrate

@@ -3,13 +3,8 @@ services:
     name: django-backend
     env: python
     plan: free
-    # Вариант 1: С build.sh
-    buildCommand: "cd backend && ./build.sh"
+    buildCommand: "./build.sh"
     startCommand: "cd backend && gunicorn config.wsgi:application"
-    
-    # Вариант 2: Без build.sh (раскомментируйте если хотите использовать)
-    # buildCommand: "pip install -r backend/requirements.txt && cd backend && python manage.py collectstatic --no-input && python manage.py migrate"
-    # startCommand: "cd backend && gunicorn config.wsgi:application"
     
     envVars:
       - key: PYTHON_VERSION
