@@ -1,17 +1,24 @@
 import axios from 'axios'
 
-// Автоматически определяем API URL
-const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-const API_BASE_URL = isLocalhost 
-  ? 'http://localhost:8000/api/' 
-  : 'https://mtachasit.onrender.com/api/'
+// Функция для динамического определения API URL
+function getApiBaseUrl() {
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  return isLocalhost 
+    ? 'http://localhost:8000/api/' 
+    : 'https://mtachasit.onrender.com/api/'
+}
 
-console.log('🌐 API Base URL:', API_BASE_URL)
-console.log('🔧 Environment:', isLocalhost ? 'LOCAL' : 'PRODUCTION')
-
+// Создаем axios instance с динамическим baseURL
 export const api = axios.create({
-  baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
+})
+
+// Перехватчик для динамического обновления baseURL
+api.interceptors.request.use((config) => {
+  config.baseURL = getApiBaseUrl()
+  console.log('🌐 API Base URL:', config.baseURL)
+  console.log('🔧 Environment:', window.location.hostname === 'localhost' ? 'LOCAL' : 'PRODUCTION')
+  return config
 })
 
 // Optional: JWT auth helpers for you personally
@@ -70,8 +77,18 @@ try {
 export const templateApi = {
   getAll: (params?: Record<string, any>) => api.get('templates/', { params }),
   getById: (id: number) => api.get(`templates/${id}/`),
-  create: (data: any) => api.post('templates/', data),
-  update: (id: number, data: any) => api.put(`templates/${id}/`, data),
+  create: async (data: any) => {
+    console.log('📤 Creating template with data:', data)
+    const response = await api.post('templates/', data)
+    console.log('✅ Template created successfully:', response.data)
+    return response
+  },
+  update: async (id: number, data: any) => {
+    console.log('📤 Updating template', id, 'with data:', data)
+    const response = await api.put(`templates/${id}/`, data)
+    console.log('✅ Template updated successfully:', response.data)
+    return response
+  },
   delete: (id: number) => api.delete(`templates/${id}/`),
   getCategories: (params?: Record<string, any>) => api.get('templates/categories/', { params }),
 }
@@ -79,8 +96,18 @@ export const templateApi = {
 export const rossiTemplateApi = {
   getAll: (params?: Record<string, any>) => api.get('templates-rossi/', { params }),
   getById: (id: number) => api.get(`templates-rossi/${id}/`),
-  create: (data: any) => api.post('templates-rossi/', data),
-  update: (id: number, data: any) => api.put(`templates-rossi/${id}/`, data),
+  create: async (data: any) => {
+    console.log('📤 Creating Rossi template with data:', data)
+    const response = await api.post('templates-rossi/', data)
+    console.log('✅ Rossi template created successfully:', response.data)
+    return response
+  },
+  update: async (id: number, data: any) => {
+    console.log('📤 Updating Rossi template', id, 'with data:', data)
+    const response = await api.put(`templates-rossi/${id}/`, data)
+    console.log('✅ Rossi template updated successfully:', response.data)
+    return response
+  },
   delete: (id: number) => api.delete(`templates-rossi/${id}/`),
   getCategories: () => api.get('templates-rossi/categories/'),
 }

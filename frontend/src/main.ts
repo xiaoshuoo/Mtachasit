@@ -19,8 +19,10 @@ const routes = [
   { path: '/Xuachoo', name: 'my-templates', component: TemplateList, props: { filter: 'all' } },
   { path: '/templates/rossi', name: 'templates-rossi', component: TemplateList, props: { filter: 'rossi' } },
   { path: '/templates/gutierrez', name: 'templates-gutierrez-public', component: TemplateList, props: { filter: 'gutierrez-public' } },
-  { path: '/templates/:id', name: 'edit', component: EditTemplate, props: true },
+  { path: '/new/gutierrez', name: 'new-gutierrez', component: EditTemplate, props: { templateType: 'gutierrez' } },
+  { path: '/new/rossi', name: 'new-rossi', component: EditTemplate, props: { templateType: 'rossi' } },
   { path: '/new', name: 'new', component: EditTemplate },
+  { path: '/templates/:id', name: 'edit', component: EditTemplate, props: true },
   { path: '/lectures', name: 'lectures', component: Lectures },
   { path: '/login', name: 'login', component: Login },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
@@ -29,6 +31,26 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+// Добавляем обработчик ошибок для отладки
+router.onError((error) => {
+  console.error('🚨 Router error:', error)
+})
+
+// Добавляем логирование навигации
+router.beforeEach((to, from, next) => {
+  console.log('🧭 Router navigation:')
+  console.log('  📍 From:', from.path, from.name)
+  console.log('  🎯 To:', to.path, to.name)
+  console.log('  🔍 To params:', to.params)
+  next()
+})
+
+router.afterEach((to, from) => {
+  console.log('✅ Navigation completed:')
+  console.log('  📍 Current path:', to.path)
+  console.log('  📍 Current name:', to.name)
 })
 
 createApp(App)

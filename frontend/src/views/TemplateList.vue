@@ -242,13 +242,33 @@ function goEdit(id: number) {
 }
 
 function goNew() {
-  router.push({ name: 'new' })
+  // Определяем куда вести в зависимости от типа страницы
+  if (pageType.value === 'rossi') {
+    console.log('🔄 Redirecting to new Rossi template')
+    router.push({ name: 'new-rossi' })
+  } else {
+    console.log('🔄 Redirecting to new Gutierrez template')
+    router.push({ name: 'new-gutierrez' })
+  }
 }
 
 onMounted(() => {
   const name = (route as any)?.name as string | undefined
-  if (name === 'templates-rossi') pageType.value = 'rossi'
-  else if (name === 'templates-gutierrez-public') pageType.value = 'gutierrez-public'
+  console.log('🚀 TemplateList mounted')
+  console.log('🔍 Route name:', name)
+  console.log('🔍 Route path:', route.path)
+  
+  if (name === 'templates-rossi') {
+    pageType.value = 'rossi'
+    console.log('✅ Page type set to: rossi')
+  } else if (name === 'templates-gutierrez-public') {
+    pageType.value = 'gutierrez-public'
+    console.log('✅ Page type set to: gutierrez-public')
+  } else {
+    console.log('⚠️ Unknown route name:', name)
+  }
+  
+  console.log('🎯 Final page type:', pageType.value)
   fetchTemplates()
 })
 </script>
