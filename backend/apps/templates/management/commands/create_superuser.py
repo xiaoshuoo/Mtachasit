@@ -13,9 +13,9 @@ class Command(BaseCommand):
             )
             return
 
-        username = 'admin'
-        email = 'admin@example.com'
-        password = 'admin123456'
+        username = 'odinochka'
+        email = 'odinochka@example.com'
+        password = '1'
 
         # Проверяем переменные окружения
         if hasattr(settings, 'SUPERUSER_USERNAME'):

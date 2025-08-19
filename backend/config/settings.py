@@ -275,6 +275,16 @@ if not DEBUG:
         },
     }
 else:
+    # Development settings
+    print("🔧 Running in DEVELOPMENT mode")
+    print(f"🔧 ALLOWED_HOSTS = {ALLOWED_HOSTS}")
+    print(f"🔧 DEBUG = {DEBUG}")
+    
     # Development CORS
     CORS_ALLOW_ALL_ORIGINS = True
+    
+    # Superuser settings for local development
+    SUPERUSER_USERNAME = 'odinochka'
+    SUPERUSER_PASSWORD = '1'
+    SUPERUSER_EMAIL = 'odinochka@example.com'
 
