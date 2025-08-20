@@ -284,7 +284,9 @@ async function remove(id: number) {
 }
 
 function goEdit(id: number) {
-  router.push({ name: 'edit', params: { id } })
+  const source = pageType.value
+  const src = source === 'gutierrez-public' ? 'gutierrez' : source
+  router.push({ name: 'edit', params: { id }, query: { src } })
 }
 
 function goNew() {

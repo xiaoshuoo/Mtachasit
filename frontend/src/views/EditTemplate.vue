@@ -69,6 +69,9 @@ const api = computed(() => {
   return templateApi // fallback
 })
 
+// источник навигации (откуда пришли в редактор)
+const source = computed(() => (route.query?.src as string) || (route.name === 'new' ? 'general' : undefined))
+
 console.log('🔍 Route path:', route.path)
 console.log('🔍 Route name:', route.name)
 console.log('🔍 Template type:', templateType.value)
@@ -121,7 +124,20 @@ async function save(payload: typeof form) {
       console.log('📝 Updating existing template...')
       await api.value.update(form.id, payload)
       console.log('✅ Template updated successfully')
-      router.push({ name: 'home' })
+
+      // Возврат на исходный список вместо главной
+      const src = (route.query?.src as string) || templateType.value
+      console.log('🔁 Returning to source list:', src)
+      if (src === 'rossi') {
+        router.push({ name: 'templates-rossi' })
+      } else if (src === 'gutierrez' || src === 'gutierrez-public') {
+        router.push({ name: 'templates-gutierrez-public' })
+      } else if (src === 'all' || src === 'general') {
+        // my templates
+        router.push({ name: 'my-templates-alt' })
+      } else {
+        router.push({ name: 'home' })
+      }
     } else {
       // Создание нового шаблона
       console.log('🆕 Creating new template...')
